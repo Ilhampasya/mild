@@ -155,7 +155,6 @@ class RouterAttribute
 
     /**
      * @param $router
-     * @throws \ReflectionException
      */
     public function group($router)
     {
