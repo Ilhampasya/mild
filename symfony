@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+require 'vendor/autoload.php';
+
+return new \App\Console\Kernel(new \App\Handlers\Handler(new \Mild\App(__DIR__)));
