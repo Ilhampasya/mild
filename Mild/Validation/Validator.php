@@ -40,10 +40,10 @@ class Validator
             if (!is_array($rule)) {
                 $rule = [$rule];
             }
-            $options = [];
             $index = null;
             $ruleName = null;
             foreach ($rule as $r) {
+                $options = [];
                 if (is_string($r)) {
                     if (strpos($r, ':')) {
                         [$r, $options] = explode(':', $r);
