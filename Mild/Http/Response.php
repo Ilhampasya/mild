@@ -158,24 +158,20 @@ class Response extends Message implements ResponseInterface
 
     /**
      * @param $data
-     * @param int $statusCode
      * @param int $options
-     * @param array $headers
      * @return JsonResponse
      */
-    public function json($data, $statusCode = 200, $options = 0, $headers = [])
+    public function json($data, $options = 0)
     {
-        return new JsonResponse($data, $statusCode, $options, $headers);
+        return new JsonResponse($data, $this->statusCode, $options, $this->headers);
     }
 
     /**
      * @param $url
-     * @param int $statusCode
-     * @param array $headers
      * @return RedirectResponse
      */
-    public function redirect($url, $statusCode = 302, $headers = [])
+    public function redirect($url)
     {
-        return new RedirectResponse($url, $statusCode, $headers);
+        return new RedirectResponse($url, $this->statusCode, $this->headers);
     }
 }
