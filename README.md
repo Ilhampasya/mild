@@ -12,6 +12,10 @@ Replace `[my-app-name]` with the desired directory name for your new application
 * Point your virtual host document root to your new application's `public/` directory.
 * Ensure `storage/` is web writeable.
 
+## Security
+
+If you discover security related issues, please email ilhampasya920@gmail.com instead of using the issue tracker.
+
 ## License
 
 Mild Framework is licensed under the MIT license. See License File for more information.
