@@ -78,7 +78,7 @@ class View
         if (!file_exists($__file)) {
             throw new InvalidArgumentException("File [$__file] does not exist.");
         }
-        $content = $this->statementsCompile($this->echosCompile($this->tagCompile(preg_replace('/{{--(.*?)--}}/s', '', file_get_contents($__file)))))."\n".implode("\n", $this->footer);
+        $content = trim($this->statementsCompile($this->echosCompile($this->tagCompile(preg_replace('/{{--(.*?)--}}/s', '', file_get_contents($__file)))))."\n".implode("\n", $this->footer));
         $this->footer = [];
         $__file = $this->paths['compiled'].'/'.sha1($__file).'.php';
         file_put_contents($__file, $content);
