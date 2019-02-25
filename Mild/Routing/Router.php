@@ -136,63 +136,30 @@ class Router
     }
 
     /**
-     * @param $url
-     * @param null $action
-     * @throws \ReflectionException
+     * @param array $attributes
+     * @param $router
      */
-    public function group($url, $action = null)
+    public function group(array $attributes, $router)
     {
         $oldGroupAttribute = $this->groupAttributes;
-        if (is_string($url)) {
-            if ($url !== '/' && file_exists($url)) {
-                if (is_array($action)) {
-                    if (isset($action['prefix'])) {
-                        $this->groupAttributes['prefix'] = $action['prefix'];
-                    }
-                    if (isset($action['namespace'])) {
-                        $this->groupAttributes['namespace'] = $action['namespace'];
-                    }
-                    if (isset($action['middleware'])) {
-                        if (!is_array($action['middleware'])) {
-                            $action['middleware'] = [$action['middleware']];
-                        }
-                        $this->groupAttributes['middleware'] = $action['middleware'];
-                    }
-                }
-                require $url;
-            } else {
-                 $this->groupAttributes['prefix'] = trim($this->groupAttributes['prefix'], '/').'/'.trim($url, '/');
-                 if (!is_array($action)) {
-                     $action = ['callback' => $action, 'middleware' => []];
-                 }
-                 if (isset($action['namespace'])) {
-                     $this->groupAttributes['namespace'] = trim($this->groupAttributes['namespace'], '\\').'\\'.trim($action['namespace'], '\\');
-                 }
-                 if (!is_array($action['middleware'])) {
-                     $action['middleware'] = [$action['middleware']];
-                 }
-                 foreach ($action['middleware'] as $middleware) {
-                     $this->groupAttributes['middleware'][] = $middleware;
-                 }
-                $this->app->call($action['callback']);
+        if (isset($attributes['prefix'])) {
+            $this->groupAttributes['prefix'] = trim($this->groupAttributes['prefix'], '/') .'/' .trim($attributes['prefix'], '/');
+        }
+        if (isset($attributes['namespace'])) {
+            $this->groupAttributes['namespace'] = trim($this->groupAttributes['namespace'], '\\') .'\\' .trim($attributes['namespace'], '\\');
+        }
+        if (isset($attributes['middleware'])) {
+            if (!is_array($attributes['middleware'])) {
+                $attributes['middleware'] = [$attributes['middleware']];
             }
-        } else {
-            if (!is_array($action)) {
-                $action = ['middleware' => []];
-            }
-            if (isset($action['prefix'])) {
-                $this->groupAttributes['prefix'] = trim($this->groupAttributes['prefix'], '/').'/'.trim($action['prefix'], '/');
-            }
-            if (isset($action['namespace'])) {
-                $this->groupAttributes['namespace'] = trim($this->groupAttributes['namespace'], '\\').'\\'.trim($action['namespace'], '\\');
-            }
-            if (!is_array($action['middleware'])) {
-                $action['middleware'] = [$action['middleware']];
-            }
-            foreach ($action['middleware'] as $middleware) {
+            foreach ($attributes['middleware'] as $middleware) {
                 $this->groupAttributes['middleware'][] = $middleware;
             }
-            $this->app->call($url);
+        }
+        if ($router instanceof Closure) {
+            $router($this);
+        } else {
+            require $router;
         }
         $this->groupAttributes = $oldGroupAttribute;
     }
