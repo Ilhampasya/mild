@@ -67,7 +67,7 @@ class $name
      * @param \Psr\Http\Message\ResponseInterface \$response
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function __invoke(\$request, \$response, \$next)
+    public function __invoke(\$request, \$response)
     {
         return \$next(\$request, \$response);
     }
