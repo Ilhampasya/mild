@@ -2,6 +2,7 @@
     "name" : "mild/mild",
     "keywords": ["framework", "mild"],
     "type": "project",
+    "license": "MIT",
     "description": "Mild is a PHP Framework that is fast and easy to learn and develop",
     "authors": [
         {
