@@ -154,29 +154,12 @@ class RouterAttribute
     }
 
     /**
-     * @param $url
-     * @param null $action
-     * @return void
+     * @param $router
      * @throws \ReflectionException
      */
-    public function group($url, $action = null)
+    public function group($router)
     {
-        if (!is_array($action)) {
-            $action = ['callback' => $action];
-        }
-        if (!isset($action['name'])) {
-            $action['name'] = $this->attributes['name'];
-        }
-        if (!isset($action['prefix'])) {
-            $action['prefix'] = $this->attributes['prefix'];
-        }
-        if (!isset($action['namespace'])) {
-            $action['namespace'] = $this->attributes['namespace'];
-        }
-        if (!isset($action['middleware'])) {
-            $action['middleware'] = $this->attributes['middleware'];
-        }
-        $this->router->group($url, $action);
+        $this->router->group($this->attributes, $router);
     }
 
     /**
